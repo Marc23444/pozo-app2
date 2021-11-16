@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="288.79998779296875" minWidth="10.0" prefWidth="136.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="464.0" minWidth="10.0" prefWidth="464.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints />
+    <RowConstraints maxHeight="361.2000030517578" minHeight="10.0" prefHeight="304.400048828125" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="194.79999389648438" minHeight="10.0" prefHeight="61.199951171875" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Save" />
+                  <MenuItem mnemonicParsing="false" text="Load" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="User Guide" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <columns>
+            <TableColumn prefWidth="150.39996337890625" text="Name" />
+          <TableColumn prefWidth="226.4000244140625" text="Serial" />
+          <TableColumn prefWidth="87.199951171875" text="Value" />
+        </columns>
+      </TableView>
+      <TextField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="118.0" promptText="Name" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
+         </GridPane.margin>
+      </TextField>
+      <TextField layoutX="160.0" layoutY="366.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="118.0" promptText="A-XXX-XXX-XXX" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets bottom="14.0" left="140.0" right="14.0" top="14.0" />
+         </GridPane.margin>
+      </TextField>
+      <TextField layoutX="286.0" layoutY="366.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="60.0" promptText="Value" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets bottom="14.0" left="270.0" right="14.0" top="14.0" />
+         </GridPane.margin>
+      </TextField>
+      <Button alignment="CENTER" mnemonicParsing="false" text="Clear Inventory" textAlignment="CENTER" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets bottom="14.0" left="20.0" right="14.0" top="14.0" />
+         </GridPane.margin>
+      </Button>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+         <font>
+            <Font size="30.0" />
+         </font>
+         <GridPane.margin>
+            <Insets top="14.0" />
+         </GridPane.margin>
+      </Text>
+      <TextField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="102.0" promptText="Name" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <TextField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="102.0" promptText="Serial" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+         <GridPane.margin>
+            <Insets top="70.0" />
+         </GridPane.margin>
+      </TextField>
+      <Button mnemonicParsing="false" text="Search" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets bottom="70.0" />
+         </GridPane.margin>
+      </Button>
+   </children>
+</GridPane>
