@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="288.79998779296875" minWidth="10.0" prefWidth="136.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="464.0" minWidth="10.0" prefWidth="464.0" />
@@ -42,8 +42,8 @@
       </MenuBar>
       <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
         <columns>
-            <TableColumn prefWidth="150.39996337890625" text="Name" />
-          <TableColumn prefWidth="226.4000244140625" text="Serial" />
+            <TableColumn prefWidth="138.0" text="Name" />
+          <TableColumn prefWidth="240.0" text="Serial" />
           <TableColumn prefWidth="87.199951171875" text="Value" />
         </columns>
       </TableView>
@@ -84,6 +84,14 @@
       <Button mnemonicParsing="false" text="Search" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets bottom="70.0" />
+         </GridPane.margin>
+      </Button>
+      <Button layoutX="52.0" layoutY="249.0" mnemonicParsing="false" text="Add" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <GridPane.margin>
+            <Insets left="340.0" />
          </GridPane.margin>
       </Button>
    </children>

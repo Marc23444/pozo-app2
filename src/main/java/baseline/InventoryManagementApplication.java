@@ -4,6 +4,11 @@
  */
 /*
     PSUEDOCODE
+    -This class is primarily used to load and run the fxml file
+        -The start function loads the specific fxml file and attaches it to a new scene
+        -After this it sets the stages title and scene to the loaded scene
+        -Finally it shows the scene
+
  */
 
 package baseline;
