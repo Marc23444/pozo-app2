@@ -27,21 +27,32 @@ package baseline;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Scanner;
+
+import com.google.gson.Gson;
+
 
 public class InventoryController implements Initializable {
 
@@ -155,10 +166,10 @@ public class InventoryController implements Initializable {
         }
     }
 
-    private boolean checkSerial(String serial)
+    public boolean checkSerial(String serial)
     {
        //Uses regex and the .matches function to check the format  of serial.
-        if(!serial.matches("\\p{Upper}-\\d{3}-\\d{3}-\\d{3}"))
+        if(!serial.matches("\\p{Upper}-\\w{3}-\\w{3}-\\w{3}"))
         {
             return false;
         }
@@ -229,7 +240,7 @@ public class InventoryController implements Initializable {
 
     //Sorts the table columns
     @FXML
-    public void sortList()
+    public void searchList()
     {
         displayedItems.clear();
         try{
@@ -288,33 +299,195 @@ public class InventoryController implements Initializable {
     public void clearList()
     {
         items.clear();
-        clearSearch();
+        displayedItems.clear();
     }
 
     @FXML
     public void clearSearch()
     {
-        nameSearchTextField.clear();
-        serialSearchTextField.clear();
+        try
+        {
+            nameSearchTextField.clear();
+            serialSearchTextField.clear();
+            table.setItems(items);
+        }
+        catch (Exception e)
+        {
+
+        }
 
         displayedItems.clear();
-        table.setItems(items);
     }
-
-
 
     //Saves the list to a file (file type is selected by the user)
     @FXML
     public void saveList()
     {
+        //Creates a new stage where the user can select the file they wish to save to.
+        Stage stage = new Stage();
+        String[] extensions = {".html",".txt",".json"};
+
+        FileChooser.ExtensionFilter myFilter = new FileChooser.ExtensionFilter("Save As",extensions);
+
+
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Inventory");
+        fileChooser.getExtensionFilters().add(myFilter);
+        File output = fileChooser.showSaveDialog(stage);
+
+        if(output.getName().contains(".html"))
+        {
+            saveAsHTML(output);
+        }
+        else if(output.getName().contains(".txt"))
+        {
+            saveAsTSV(output);
+        }
+        else if(output.getName().contains(".json"))
+        {
+            saveAsJSON(output);
+        }
+
+
+
 
     }
+
+    //Saving helper Functions
+    public void saveAsHTML(File output)
+    {
+        String htmlStartText = """
+                <html>
+                    <head>
+                        <title>Inventory Data</title>
+                    </head>
+                    <body>
+                    <table>
+                """;
+
+        String htmlEndText = """
+                    </table>
+                    </body>
+                </html>
+                """;
+
+        try(FileWriter myWriter = new FileWriter(output))
+        {
+            myWriter.write(htmlStartText);
+
+            for (Item temp : items)
+            {
+                myWriter.write("<tr>\n<td>"+temp.getValue()+"</td>\n<td>"+temp.getName()+"</td>\n<td>"+temp.getSerial()+"</td>\n</tr>");
+            }
+
+            myWriter.write(htmlEndText);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveAsTSV(File output)
+    {
+
+        try(FileWriter myWriter = new FileWriter(output))
+        {
+            myWriter.write("Serial Number\tName\tValue\n");
+            for (Item temp : items)
+            {
+                myWriter.write(temp.getSerial()+"\t"+temp.getName()+"\t"+temp.getValue()+"\n");
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void saveAsJSON(File output)
+    {
+        Gson gson = new Gson();
+
+
+
+        try(FileWriter myWriter = new FileWriter(output))
+        {
+            gson.toJson(items,myWriter);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
     //Loads an inventory from a file
     @FXML
     public void loadList()
     {
+        //Create a fileChooser to select the file to load from
+        Stage stage = new Stage();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Load Inventory");
 
+
+        File input = fileChooser.showOpenDialog(stage);
+
+        //Clear out the current items in the list
+        items.clear();
+
+        //Try catch block for the file
+        try
+        {
+            //Scanner is used to read in input from the file
+            Scanner in = new Scanner(input);
+            String name;
+            String serial;
+            double value;
+
+            //Every set of 3 represents an item object
+            while(in.hasNextLine())
+            {
+
+            }
+            //Closing the scanner...
+            in.close();
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
+    @FXML
+    public void helpButton()
+    {
+        //Creating and naming the stage
+        Stage instructions = new Stage();
+        instructions.setTitle("User Guide");
+
+        //Grabbing the User_Guide file, I opted to use a file because putting a 15 line text block would look awful.
+        File userGuide = new File("User_Guide.txt");
+        try (Scanner input = new Scanner(userGuide)) {
+
+            //Creating a dialogBox and adding all the text
+            VBox dialogVbox = new VBox(5);
+            while (input.hasNextLine()) {
+                dialogVbox.getChildren().add(new Text(input.nextLine()));
+            }
+            //Creating and displaying the scene
+            Scene dialogScene = new Scene(dialogVbox, 850, 320);
+            instructions.setScene(dialogScene);
+            instructions.show();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
 
 
 }

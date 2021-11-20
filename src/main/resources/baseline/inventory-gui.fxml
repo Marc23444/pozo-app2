@@ -30,13 +30,13 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Save" />
+              <MenuItem mnemonicParsing="false" onAction="#saveList" text="Save" />
                   <MenuItem mnemonicParsing="false" text="Load" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="User Guide" />
+              <MenuItem mnemonicParsing="false" onAction="#helpButton" text="User Guide" />
             </items>
           </Menu>
         </menus>
@@ -92,7 +92,7 @@
             <Insets top="70.0" />
          </GridPane.margin>
       </TextField>
-      <Button mnemonicParsing="false" onAction="#sortList" text="Search" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+      <Button mnemonicParsing="false" onAction="#searchList" text="Search" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets bottom="70.0" />
          </GridPane.margin>

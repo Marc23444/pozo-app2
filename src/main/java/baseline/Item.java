@@ -29,54 +29,48 @@ public class Item {
         this.serial = serial;
     }
 
-    private void nameError()
-    {
-        Alert nameErrorAlert = new Alert(Alert.AlertType.ERROR);
-        nameErrorAlert.setHeaderText("Invalid Input");
-        nameErrorAlert.setContentText("The Item's name must be between 2 and 256 characters.");
-        nameErrorAlert.showAndWait();
-    }
-
-    private void valueError()
-    {
-        Alert valueErrorAlert = new Alert(Alert.AlertType.ERROR);
-        valueErrorAlert.setHeaderText("Invalid Input");
-        valueErrorAlert.setContentText("The Item's value must be greater than 0.0 and a valid double.");
-        valueErrorAlert.showAndWait();
-    }
-
-    private void serialError()
-    {
-        Alert serialErrorAlert = new Alert(Alert.AlertType.ERROR);
-        serialErrorAlert.setHeaderText("Invalid Input");
-        serialErrorAlert.setContentText("The Item's serial must in the format A-XXX-XXX-XXX and cannot be a duplicate.");
-        serialErrorAlert.showAndWait();
-    }
 
     public void setValue(String value)
     {
-        this.value = Double.parseDouble(value);
+        try
+        {
+            if(Double.parseDouble(value) > 0.0)
+            {
+                this.value = Double.parseDouble(value);
+            }
+        }
+        catch (Exception e)
+        {
+            Alert valueErrorAlert = new Alert(Alert.AlertType.ERROR);
+            valueErrorAlert.setHeaderText("Invalid Input");
+            valueErrorAlert.setContentText("The Item's value must be greater than 0.0 and a valid double.");
+            valueErrorAlert.showAndWait();
+        }
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public void setSerial(String serial) {
+    public void setSerial(String serial)
+    {
 
         this.serial = serial;
     }
 
-    public String getValue() {
-
-        return value.toString();
+    public String getValue()
+    {
+        return this.value.toString();
     }
 
-    public String getName(){
-        return name;
+    public String getName()
+    {
+        return this.name;
     }
 
-    public String getSerial() {
-        return serial;
+    public String getSerial()
+    {
+        return this.serial;
     }
 }
