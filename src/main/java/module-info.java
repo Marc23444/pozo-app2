@@ -1,4 +1,4 @@
-module com.example.applicationassignment2 {
+module baseline {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.base;

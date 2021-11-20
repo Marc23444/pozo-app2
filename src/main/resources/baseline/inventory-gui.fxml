@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="baseline.InventoryController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="288.79998779296875" minWidth="10.0" prefWidth="136.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="464.0" minWidth="10.0" prefWidth="464.0" />
@@ -40,29 +41,39 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
         <columns>
-            <TableColumn prefWidth="138.0" text="Name" />
-          <TableColumn prefWidth="240.0" text="Serial" />
-          <TableColumn prefWidth="87.199951171875" text="Value" />
+          <TableColumn fx:id="col1" prefWidth="77.0" text="Value" />
+            <TableColumn fx:id="col2" prefWidth="209.0" text="Name" />
+          <TableColumn fx:id="col3" prefWidth="180.0" text="Serial" />
         </columns>
+         <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#deleteItem" text="Delete" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
-      <TextField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="118.0" promptText="Name" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <TextField fx:id="nameTextField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="118.0" promptText="Name" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
          </GridPane.margin>
       </TextField>
-      <TextField layoutX="160.0" layoutY="366.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="118.0" promptText="A-XXX-XXX-XXX" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <TextField fx:id="serialTextField" layoutX="160.0" layoutY="366.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="118.0" promptText="A-XXX-XXX-XXX" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets bottom="14.0" left="140.0" right="14.0" top="14.0" />
          </GridPane.margin>
       </TextField>
-      <TextField layoutX="286.0" layoutY="366.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="60.0" promptText="Value" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <TextField fx:id="valueTextField" layoutX="286.0" layoutY="366.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="60.0" promptText="Value" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets bottom="14.0" left="270.0" right="14.0" top="14.0" />
          </GridPane.margin>
       </TextField>
-      <Button alignment="CENTER" mnemonicParsing="false" text="Clear Inventory" textAlignment="CENTER" GridPane.rowIndex="2">
+      <Button alignment="CENTER" mnemonicParsing="false" onAction="#clearList" text="Clear Inventory" textAlignment="CENTER" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets bottom="14.0" left="20.0" right="14.0" top="14.0" />
          </GridPane.margin>
@@ -75,23 +86,28 @@
             <Insets top="14.0" />
          </GridPane.margin>
       </Text>
-      <TextField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="102.0" promptText="Name" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-      <TextField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="102.0" promptText="Serial" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+      <TextField fx:id="nameSearchTextField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="102.0" promptText="Name" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <TextField fx:id="serialSearchTextField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="102.0" promptText="Serial" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets top="70.0" />
          </GridPane.margin>
       </TextField>
-      <Button mnemonicParsing="false" text="Search" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+      <Button mnemonicParsing="false" onAction="#sortList" text="Search" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets bottom="70.0" />
          </GridPane.margin>
       </Button>
-      <Button layoutX="52.0" layoutY="249.0" mnemonicParsing="false" text="Add" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <Button layoutX="52.0" layoutY="249.0" mnemonicParsing="false" onAction="#addItem" text="Add" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <GridPane.margin>
             <Insets left="340.0" />
+         </GridPane.margin>
+      </Button>
+      <Button alignment="CENTER" layoutX="30.0" layoutY="365.0" mnemonicParsing="false" onAction="#clearSearch" text="Clear Search" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+         <GridPane.margin>
+            <Insets top="210.0" />
          </GridPane.margin>
       </Button>
    </children>
