@@ -4,8 +4,7 @@ module baseline {
     requires javafx.base;
     requires com.google.gson;
 
-
-    opens baseline to javafx.fxml;
+    opens baseline to com.google.gson, javafx.fxml;
 
     exports baseline;
 

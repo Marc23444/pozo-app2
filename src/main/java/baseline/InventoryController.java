@@ -25,8 +25,10 @@
  */
 package baseline;
 
+import com.google.gson.reflect.TypeToken;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -41,15 +43,12 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import com.google.gson.Gson;
 
@@ -115,15 +114,57 @@ public class InventoryController implements Initializable {
         //Sets the CellFactory types for the columns
         col1.setCellFactory(TextFieldTableCell.forTableColumn());
         col1.setOnEditCommit(
-                tableEdit -> tableEdit.getTableView().getItems().get(tableEdit.getTablePosition().getRow()).setValue(tableEdit.getNewValue())
+                tableEdit -> {
+                    try
+                    {
+                        Double.parseDouble(tableEdit.getNewValue());
+                        tableEdit.getTableView().getItems().get(tableEdit.getTablePosition().getRow()).setValue(tableEdit.getNewValue());
+                    }
+                    catch (Exception e)
+                    {
+                        //Shows error
+                        valueError();
+                        //Refresh the table
+                        table.getColumns().get(0).setVisible(false);
+                        table.getColumns().get(0).setVisible(true);
+                    }
+                }
         );
         col2.setCellFactory(TextFieldTableCell.forTableColumn());
         col2.setOnEditCommit(
-                tableEdit -> tableEdit.getTableView().getItems().get(tableEdit.getTablePosition().getRow()).setName(tableEdit.getNewValue())
+                tableEdit -> {
+                    if(tableEdit.getNewValue().length() >= 2 && tableEdit.getNewValue().length() <= 256)
+                    {
+                        tableEdit.getTableView().getItems().get(tableEdit.getTablePosition().getRow()).setName(tableEdit.getNewValue());
+                    }
+                    else
+                    {
+                        //Shows error
+                        nameError();
+                        //Refresh the table
+                        table.getColumns().get(1).setVisible(false);
+                        table.getColumns().get(1).setVisible(true);
+                    }
+                }
         );
         col3.setCellFactory(TextFieldTableCell.forTableColumn());
         col3.setOnEditCommit(
-                tableEdit -> tableEdit.getTableView().getItems().get(tableEdit.getTablePosition().getRow()).setSerial(tableEdit.getNewValue())
+                tableEdit -> {
+
+                    if(checkSerial(tableEdit.getNewValue()))
+                    {
+                        tableEdit.getTableView().getItems().get(tableEdit.getTablePosition().getRow()).setSerial(tableEdit.getNewValue());
+                    }
+                    else
+                    {
+                        //Shows error
+                        serialError();
+                        //Refresh the table
+                        table.getColumns().get(2).setVisible(false);
+                        table.getColumns().get(2).setVisible(true);
+                    }
+
+                }
         );
 
         //Sets the items of the table
@@ -412,7 +453,6 @@ public class InventoryController implements Initializable {
         Gson gson = new Gson();
 
 
-
         try(FileWriter myWriter = new FileWriter(output))
         {
             gson.toJson(items,myWriter);
@@ -422,7 +462,6 @@ public class InventoryController implements Initializable {
             e.printStackTrace();
         }
     }
-
 
     //Loads an inventory from a file
     @FXML
@@ -444,22 +483,129 @@ public class InventoryController implements Initializable {
         {
             //Scanner is used to read in input from the file
             Scanner in = new Scanner(input);
-            String name;
-            String serial;
-            double value;
 
-            //Every set of 3 represents an item object
-            while(in.hasNextLine())
+            if(input.getName().contains(".html"))
+            {
+                loadHTML(in);
+            }
+            else if (input.getName().contains(".txt"))
+            {
+                loadTSV(in);
+            }
+            else if(input.getName().contains(".json"))
             {
 
+                loadJSON(in);
             }
-            //Closing the scanner...
+
             in.close();
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
+
+    //Loading Helper Functions
+    public void loadHTML(Scanner in)
+    {
+        String name;
+        String serial;
+        String value;
+
+        in.skip(Pattern.compile("""
+                                <html>
+                                    <head>
+                                        <title>Inventory Data</title>
+                                    </head>
+                                    <body>
+                                    <table>
+                                <tr>
+                                """));
+
+        while(in.hasNextLine())
+        {
+
+
+            value = in.nextLine();
+            name = in.nextLine();
+            serial = in.nextLine();
+
+
+            value = value.substring(4,value.length()-5);
+            name = name.substring(4,name.length()-5);
+            serial = serial.substring(4,serial.length()-5);
+
+
+            createItem(Double.parseDouble(value),name,serial);
+
+            if(in.nextLine().contains("</table>"))
+            {
+                break;
+            }
+        }
+
+
+    }
+
+    public void loadTSV(Scanner in)
+    {
+        String name;
+        String serial;
+        String value;
+
+
+        in.nextLine();
+        while(in.hasNext())
+        {
+            serial = in.next();
+            name = in.next();
+            value = in.next();
+            createItem(Double.parseDouble(value),name,serial);
+        }
+    }
+
+    public void loadJSON(Scanner in)
+    {
+        String name;
+        String serial;
+        String value;
+
+        in.useDelimiter(",");
+        try
+        {
+            while (in.hasNext())
+            {
+                value = in.next();
+                name = in.next();
+                serial = in.next();
+
+                value = value.substring(9);
+                name = name.substring(8,name.length()-1);
+                serial = serial.substring(10,serial.length()-2);
+
+                if(value.contains(":"))
+                {
+                    value = value.substring(1);
+                }
+
+                if(serial.contains("\""))
+                {
+                    serial = serial.substring(0,serial.length()-1);
+                }
+
+
+                createItem(Double.parseDouble(value),name,serial);
+            }
+        }
+        catch (Exception ignored)
+        {
+
+        }
+
+
+    }
+
+    //Help button functionality
     @FXML
     public void helpButton()
     {
@@ -477,7 +623,7 @@ public class InventoryController implements Initializable {
                 dialogVbox.getChildren().add(new Text(input.nextLine()));
             }
             //Creating and displaying the scene
-            Scene dialogScene = new Scene(dialogVbox, 850, 320);
+            Scene dialogScene = new Scene(dialogVbox, 850, 600);
             instructions.setScene(dialogScene);
             instructions.show();
         }

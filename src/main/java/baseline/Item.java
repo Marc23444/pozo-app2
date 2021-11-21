@@ -32,30 +32,17 @@ public class Item {
 
     public void setValue(String value)
     {
-        try
-        {
-            if(Double.parseDouble(value) > 0.0)
-            {
-                this.value = Double.parseDouble(value);
-            }
-        }
-        catch (Exception e)
-        {
-            Alert valueErrorAlert = new Alert(Alert.AlertType.ERROR);
-            valueErrorAlert.setHeaderText("Invalid Input");
-            valueErrorAlert.setContentText("The Item's value must be greater than 0.0 and a valid double.");
-            valueErrorAlert.showAndWait();
-        }
+        this.value = Double.parseDouble(value);
     }
 
     public void setName(String name)
     {
         this.name = name;
+
     }
 
     public void setSerial(String serial)
     {
-
         this.serial = serial;
     }
 

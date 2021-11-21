@@ -31,7 +31,7 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#saveList" text="Save" />
-                  <MenuItem mnemonicParsing="false" text="Load" />
+                  <MenuItem mnemonicParsing="false" onAction="#loadList" text="Load" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

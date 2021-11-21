@@ -1,1 +1,27 @@
-Temp
+Welcome to the inventory management program, created by Marcelino Pozo
+======================================================================
+
+1.To add a new inventory item, type the data in the 3 bottom text fields. The name of the item must be between 2 and 256 
+characters, the serial must be of format A-XXX-XXX-XXX and the value must be a valid number. To add your inventory item 
+to the list click the "Add" button located on the bottom right
+
+2.To remove a single inventory item right click the item you wish to remove and then click "Delete" from the context menu.
+
+3.To remove all inventory items click the "Clear Inventory" button located on the bottom left corner.
+
+4.To edit the name, serial or value of an item double click the value you wish to edit. Once you’ve finished editing press 
+enter to commit your changes or escape to get rid of them.
+
+5. To sort the inventory by value, name or serial click the top of the column you wish to sort by. It will sort by ascending 
+on the first click, then descending on the second click. It will become unsorted on the third click.
+
+6. To search through your inventory by either name or serial, enter in a name or serial into the "Name" or "Serial" text 
+fields located on the left side of the screen. Then press the "Search" button to search through and update the table. To
+clear your search and go back to the original list, just click the "Clear Search" button.
+
+7. There are many options to save your inventory. To save your inventory click the "File" tab and then click "Save" from
+ the dropdown. Once you choose the location and name of the file, you can save it as either and html, .txt (in tab 
+ separated format) or json format.
+
+8. Loading an inventory is similar to saving an inventory. To do this click "File" and then click "Load" from the 
+dropdown. Then select the file you wish to load. If it is in an acceptable format the inventory will be loaded and updated.
