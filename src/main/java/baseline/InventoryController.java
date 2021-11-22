@@ -226,7 +226,7 @@ public class InventoryController implements Initializable {
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            valueError();
         }
     }
 
