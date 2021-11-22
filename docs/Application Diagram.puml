@@ -1,11 +1,75 @@
 @startuml
-'https://plantuml.com/sequence-diagram
 
-autonumber
+class Item
+{
+    -double value
+    -String name
+    -String serial
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+    +Item(double value, String name, String serial)
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+    +void setValue(String value)
+    +void setName(String name)
+    +void setSerial(String serial)
+
+    +String getValue()
+    +String getName()
+    +String getSerial()
+
+}
+
+class InventoryManagementApplication extends Application
+{
+    +void start(Stage stage)
+    +{static}void main(String[] args)
+
+}
+
+class InventoryController implements Initializable
+{
+    +ObservableList Items
+    +ObservableList DisplayedItems
+
+    -TableView<Item> table
+    -TableColumn<Item,String> col1
+    -TableColumn<Item,String> col2
+    -TableColumn<Item,String> col3
+
+    -TextField nameTextField
+    -TextField serialTextField
+    -TextField valueTextField
+
+    -TextField nameSearchTextField
+    -TextField serialSearchTextField
+
+    +void createItem(double value, String name, String serial)
+    +void initialize(URL url, ResourceBundle rb)
+    +void addItem()
+    +boolean checkSerial()
+
+    -void nameError()
+    -void valueError()
+    -void serialError()
+
+    +void deleteItem()
+    +void searchList()
+    +void clearList()
+    +void clearSearch()
+
+    +void saveList()
+    +void saveAsHTML()
+    +void saveAsTSV()
+    +void saveAsJSON()
+
+    +void loadList()
+    +void loadHTML()
+    +void loadTSV()
+    +void loadJSON()
+
+    +void helpButton()
+}
+
+InventoryManagementApplication "Initializes FXML which \n uses InventoryController"*-- InventoryController
+
+InventoryController "Create objects of"*-- Item
 @enduml

@@ -18,11 +18,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 
 public class InventoryManagementApplication extends Application {
     @Override
-    public void start(Stage stage) throws IOException, Exception {
+    public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(InventoryManagementApplication.class.getResource("inventory-gui.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Hello!");

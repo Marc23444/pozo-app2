@@ -10,18 +10,19 @@
         -Serial
     -This class has one parameterized constructor
         -This constructor will take in a double and 2 strings
-    -Finally this class has 3 getter methods so data can be returned.
+    -Finally this class has 3 getter methods so data can be returned, and 3 Setter methods so data can be changed.
+
  */
 package baseline;
 
-import javafx.scene.control.Alert;
-
 public class Item {
 
+    //Fields
     private Double value;
     private String name;
     private String serial;
 
+    //Constructor
     public Item(double value, String name, String serial)
     {
         this.value = value;
@@ -30,6 +31,7 @@ public class Item {
     }
 
 
+    //Setters
     public void setValue(String value)
     {
         this.value = Double.parseDouble(value);
@@ -46,10 +48,8 @@ public class Item {
         this.serial = serial;
     }
 
-    public String getValue()
-    {
-        return this.value.toString();
-    }
+    //Getters
+    public String getValue() { return "$"+this.value.toString(); }
 
     public String getName()
     {
